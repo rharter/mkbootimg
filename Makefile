@@ -10,7 +10,7 @@ RM = del
 endif
 
 CFLAGS = -ffunction-sections -O3
-LDFLAGS = -Wl,--gc-sections
+LDFLAGS = -Wl
 
 all:libmincrypt.a mkbootimg$(EXE) unpackbootimg$(EXE)
 
@@ -20,19 +20,19 @@ libmincrypt.a:
 	make -C libmincrypt
 
 mkbootimg$(EXE):mkbootimg.o
-	$(CROSS_COMPILE)$(CC) -o $@ $^ -L. -lmincrypt $(LDFLAGS) -s
+	$(CROSS_COMPILE)$(CC) -o $@ $^ -L. -lmincrypt $(LDFLAGS)
 
 mkbootimg-static$(EXE):mkbootimg.o
-	$(CROSS_COMPILE)$(CC) -o $@ $^ -L. -lmincrypt $(LDFLAGS) -static -s
+	$(CROSS_COMPILE)$(CC) -o $@ $^ -L. -lmincrypt $(LDFLAGS) -static
 
 mkbootimg.o:mkbootimg.c
 	$(CROSS_COMPILE)$(CC) -o $@ $(CFLAGS) -c $< -I. -Werror
 
 unpackbootimg$(EXE):unpackbootimg.o
-	$(CROSS_COMPILE)$(CC) -o $@ $^ $(LDFLAGS) -s
+	$(CROSS_COMPILE)$(CC) -o $@ $^ $(LDFLAGS)
 
 unpackbootimg-static$(EXE):unpackbootimg.o
-	$(CROSS_COMPILE)$(CC) -o $@ $^ $(LDFLAGS) -static -s
+	$(CROSS_COMPILE)$(CC) -o $@ $^ $(LDFLAGS) -static
 
 unpackbootimg.o:unpackbootimg.c
 	$(CROSS_COMPILE)$(CC) -o $@ $(CFLAGS) -c $< -Werror
